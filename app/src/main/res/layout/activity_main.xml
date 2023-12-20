@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFDD0"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/lobster_two_bold_italic"
+        android:text="Charging Companion"
+        android:textColor="#eddde9"
+        android:textSize="28dp" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/imgEmblem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="100dp">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@mipmap/solar_power_illustration" />
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnMyDevice"
+        android:text="My device"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="#1286a6"
+        android:textColor="#eddde9"
+        android:layout_below="@id/imgEmblem"
+        android:layout_marginTop="10dp"
+        />
+
+    <Button
+        android:id="@+id/btnDevices"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnMyDevice"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#1286a6"
+        android:text="Devices"
+        android:textColor="#eddde9" />
+
+    <Button
+        android:id="@+id/btnBestChargingDevice"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnDevices"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#1286a6"
+        android:text="Best charging device"
+        android:textColor="#eddde9" />
+
+    <Button
+        android:id="@+id/btnEnergyGraph"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnBestChargingDevice"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#1286a6"
+        android:text="Energy graph"
+        android:textColor="#eddde9" />
+
+    <Button
+        android:id="@+id/btnAbout"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnEnergyGraph"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#1286a6"
+        android:text="About"
+        android:textColor="#eddde9" />
+
+    <TextView
+        android:id="@+id/txtDevelopedBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="Developed by Cruceanu Calin"
+        android:textColor="#eddde9"
+        android:textStyle="italic" />
+
+</RelativeLayout>
