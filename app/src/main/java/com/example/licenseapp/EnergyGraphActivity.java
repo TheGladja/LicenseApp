@@ -31,6 +31,7 @@ public class EnergyGraphActivity extends AppCompatActivity {
     private List<BarEntry> entriesBarChart = new ArrayList<>();
     private List<String> labelsBarChart = new ArrayList<>();
     private List<PieEntry> entriesPieChart = new ArrayList<>();
+    private boolean appFirstOpened = false;
 
 
     @Override
@@ -47,10 +48,13 @@ public class EnergyGraphActivity extends AppCompatActivity {
         if (entriesBarChart.size() == 0) {
             initDataSets();
             getDataSets();
+            appFirstOpened = true;
         }
 
-        //Add the biggest energy value that was read in that moment
-        addCurrentEnergySet();
+        if(!appFirstOpened){
+            //Add the biggest energy value that was read in that moment
+            addCurrentEnergySet();
+        }
 
         //FOR THE BAR CHART
         displayBarChart();
@@ -136,9 +140,13 @@ public class EnergyGraphActivity extends AppCompatActivity {
         GraphModel lastestEnergyRead = graphSetsList.get(graphSetsList.size() - 1);
         if(lastestEnergyRead.getDate().equals(newGraphModel.getDate())){
             if(newGraphModel.getEnergy() > lastestEnergyRead.getEnergy()){
-                graphDatabase.deleteGraphSet(lastestEnergyRead);
-                graphDatabase.addGraphSet(newGraphModel);
-                Toast.makeText(this, "Bigger energy value added to the graphs", Toast.LENGTH_SHORT).show();
+                try{
+                    graphDatabase.deleteGraphSet(lastestEnergyRead);
+                    graphDatabase.addGraphSet(newGraphModel);
+                    Toast.makeText(this, "Bigger energy value added to the graphs", Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    Toast.makeText(this, "Error adding a bigger energy value", Toast.LENGTH_SHORT).show();
+                }
 
                 //Update the graphs
                 entriesBarChart.clear();
@@ -147,8 +155,12 @@ public class EnergyGraphActivity extends AppCompatActivity {
                 getDataSets();
             }
         }else{
-            graphDatabase.addGraphSet(newGraphModel);
-            Toast.makeText(this, "New energy value added to the graphs", Toast.LENGTH_SHORT).show();
+            try{
+                graphDatabase.addGraphSet(newGraphModel);
+                Toast.makeText(this, "New energy value added to the graphs", Toast.LENGTH_SHORT).show();
+            }catch (Exception e){
+                Toast.makeText(this, "Error adding new energy value", Toast.LENGTH_SHORT).show();
+            }
 
             //Update the graphs
             entriesBarChart.clear();
@@ -171,31 +183,25 @@ public class EnergyGraphActivity extends AppCompatActivity {
     }
 
     private void initDataSets() {
+        //*******
+        Random random = new Random();
+        int randomNumber = random.nextInt(91) + 10; // Generates a random number between 0 and 90, then adds 10
+        //*******
         GraphDatabase graphDatabase = new GraphDatabase(this);
-        List<GraphModel> graphModelList = new ArrayList<>();
-        boolean success = true;
+        // Get the current date
+        LocalDate localDate = LocalDate.now();
+        // Define a format for the date string (optional)
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        // Convert the date to a string using the defined format
+        String date = localDate.format(dateTimeFormatter);
 
-        try {
-            graphModelList.add(new GraphModel(1, "30.04.2013", 68));
-            graphModelList.add(new GraphModel(2, "03.05.2013", 13));
-            graphModelList.add(new GraphModel(3, "22.05.2013", 31));
-            graphModelList.add(new GraphModel(4, "27.05.2013", 22));
-            graphModelList.add(new GraphModel(5, "18.06.2013", 100));
-        } catch (Exception e) {
-            Toast.makeText(this, "Error initializing graph sets", Toast.LENGTH_SHORT).show();
-        }
+        GraphModel newGraphModel = new GraphModel(1, date,  randomNumber);
 
-        for (GraphModel gp : graphModelList) {
-            try {
-                graphDatabase.addGraphSet(gp);
-            } catch (Exception e) {
-                success = false;
-            }
-        }
-        if (success) {
-            Toast.makeText(this, "Graph sets initialized successfully", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Error initializing graph sets", Toast.LENGTH_SHORT).show();
+        try{
+            graphDatabase.addGraphSet(newGraphModel);
+            Toast.makeText(this, "Graph initialized successfully", Toast.LENGTH_SHORT).show();
+        }catch(Exception e){
+            Toast.makeText(this, "Error initializing graph", Toast.LENGTH_SHORT).show();
         }
     }
 

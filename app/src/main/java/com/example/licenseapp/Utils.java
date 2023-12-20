@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,23 +30,18 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Utils {
+    private Context context;
     private static Utils instance;
     private SharedPreferences sharedPreferences;
-    private static final String ALL_DEVICES_KEY = "all_devices", MY_DEVICE_IMG_URL = "my_device_img_url";
+    private static final String MY_DEVICE_IMG_URL = "my_device_img_url";
 
     private Utils(Context context){
-        sharedPreferences = context.getSharedPreferences("simple_db", Context.MODE_PRIVATE);
-
-        if(getAllDevices() == null){
-            //If it is the first time the user launches the app
-            //It will initialize the data
-            initData();
-        }
-        initData();
+        this.context = context;
+        sharedPreferences = context.getSharedPreferences("image_url_link", Context.MODE_PRIVATE);
     }
 
-    private void initData() {
-        ArrayList<Device> devices = new ArrayList<>();
+    public void initData() {
+        List<Device> devices = new ArrayList<>();
 
         initDevices(devices);
 
@@ -62,7 +59,7 @@ public class Utils {
                 // Check if all images are loaded
                 if (count == devices.size()) {
                     // All images loaded, persist the updated data
-                    persistDevicesData(devices);
+                    initDevicesDatabase(devices);
                 }
             });
         }
@@ -73,12 +70,11 @@ public class Utils {
         });
     }
 
-    private void initDevices(ArrayList<Device> devices){
+    private void initDevices(List<Device> devices){
         devices.add(new Device(
                 2000,
                 "Samsung",
                 "galaxy s21",
-                "image",
                 "A world of pure wilderness",
                 "Long descriptionLong descriptionLong descriptionLong descriptionLong descriptionLong descriptionLong descriptionLong description" +
                         "Long descriptionLong descriptionLong descriptionLong descriptionLong descriptionLong descriptionLong description" +
@@ -86,21 +82,40 @@ public class Utils {
                         "Long descriptionLong descriptionLong descriptionLong descriptionLong description"
         ));
 
-        devices.add(new Device(700, "Iphone", "15s", "image",
+        devices.add(new Device(700, "Iphone", "15s",
                 "Full of horror and suspense", "Long description"));
-        devices.add(new Device(400,"Alcatel", "galaxy s21", "image",
+        devices.add(new Device(400,"Alcatel", "galaxy s21",
                 "A world of pure wilderness", "Long description"));
-        devices.add(new Device(1000, "Xiaomi", "15s", "image",
+        devices.add(new Device(1000, "Xiaomi", "15s",
                 "Full of horror and suspense", "Long description"));
     }
 
-    private void persistDevicesData(ArrayList<Device> devices) {
-        // Persist the data
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        editor.putString(ALL_DEVICES_KEY, gson.toJson(devices));
-        //editor.putString(MY_DEVICE_IMG_URL, gson.toJson(myDeviceImgUrl));
-        editor.apply(); // Use apply() for asynchronous write
+    private void initDevicesDatabase(List<Device> devices) {
+        DeviceDatabase deviceDatabase = new DeviceDatabase(context);
+        boolean initialized = true;
+
+        for(Device d : devices){
+            try{
+                deviceDatabase.addDevice(d);
+            }catch (Exception e){
+                initialized = false;
+            }
+        }
+
+        final boolean isInitialized = initialized;
+        final Context appContext = context.getApplicationContext();
+
+        // Display the initialization message on the main UI thread
+        new Handler(appContext.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (isInitialized) {
+                    Toast.makeText(appContext, "Devices initialized successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(appContext, "Error initializing devices", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void persistMyDeviceImageUrl(String imageUrl){
@@ -117,10 +132,9 @@ public class Utils {
         return instance;
     }
 
-    public ArrayList<Device> getAllDevices() {
-        Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<Device>>(){}.getType();
-        ArrayList<Device> devices = gson.fromJson(sharedPreferences.getString(ALL_DEVICES_KEY, null), type);
+    public List<Device> getAllDevices(Context context) {
+        DeviceDatabase deviceDatabase = new DeviceDatabase(context);
+        List<Device> devices = deviceDatabase.getAllDevices();
         return devices;
     }
 
@@ -131,9 +145,9 @@ public class Utils {
         return imageUrl;
     }
 
-    public Device getdeviceById(int id){
+    public Device getdeviceById(int id, Context context){
         //Get the device from SharedPreferences (like a database)
-        ArrayList<Device> devices = getAllDevices();
+        List<Device> devices = getAllDevices(context);
         if(devices != null){
             for(Device d : devices){
                 if(d.getId() == id)
@@ -152,31 +166,30 @@ public class Utils {
     //We use listener as a parameter along with starting a new thread in order to make this method async
     //When listener.onImageLoadComplete(imageUrl) will be called we will know that the image url has ben successfully selected
     public static void scrapeImages(final String searchQuery, final ImageLoadListener listener) {
-        new Thread(() -> {
-            ArrayList<String> imageUrls = new ArrayList<>();
+            new Thread(() -> {
+                ArrayList<String> imageUrls = new ArrayList<>();
 
-            try {
-                String searchUrl = "https://www.google.com/search?q=" + searchQuery + "&tbm=isch";
-                Document doc = Jsoup.connect(searchUrl)
-                        .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
-                        .get();
+                try {
+                    String searchUrl = "https://www.google.com/search?q=" + searchQuery + "&tbm=isch";
+                    Document doc = Jsoup.connect(searchUrl)
+                            .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
+                            .get();
 
-                Elements imageElements = doc.select("img");
-                for (Element imageElement : imageElements) {
-                    String imageUrl = imageElement.attr("src");
-                    // Check if the URL is a valid image URL
-                    if (imageUrl.startsWith("http")) {
-                        imageUrls.add(imageUrl);
+                    Elements imageElements = doc.select("img");
+                    for (Element imageElement : imageElements) {
+                        String imageUrl = imageElement.attr("src");
+                        // Check if the URL is a valid image URL
+                        if (imageUrl.startsWith("http")) {
+                            imageUrls.add(imageUrl);
+                        }
                     }
-                }
 
-                if (!imageUrls.isEmpty() && listener != null) {
-                    listener.onImageLoadComplete(imageUrls.get(0));
+                    if (!imageUrls.isEmpty() && listener != null) {
+                        listener.onImageLoadComplete(imageUrls.get(0));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
+            }).start();
     }
-
 }

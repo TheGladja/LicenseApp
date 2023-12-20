@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BestChargingDeviceActivity extends AppCompatActivity {
     private ImageView deviceImg;
@@ -24,7 +25,7 @@ public class BestChargingDeviceActivity extends AppCompatActivity {
         //Display the best charging device
         int min = 100000;
         Device bestDevice = null;
-        ArrayList<Device> devices = Utils.getInstance(this).getAllDevices();
+        List<Device> devices = Utils.getInstance(this).getAllDevices(this);
         for(Device d : devices){
             if(d.getBattery() < min){
                 min = d.getBattery();

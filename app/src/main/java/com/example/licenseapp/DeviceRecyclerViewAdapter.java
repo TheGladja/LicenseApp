@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeviceRecyclerViewAdapter extends RecyclerView.Adapter<DeviceRecyclerViewAdapter.ViewHolder> {
-    private ArrayList<Device> devices = new ArrayList<>();
+    private List<Device> devices = new ArrayList<>();
     private Context context;
 
     public DeviceRecyclerViewAdapter(Context context){
@@ -69,10 +69,15 @@ public class DeviceRecyclerViewAdapter extends RecyclerView.Adapter<DeviceRecycl
         });
 
         //Expand or collapse the card view by pressing the arrows and hide the down arrow
-        if(devices.get(position).isExpanded()){
-            TransitionManager.beginDelayedTransition(holder.parent);
+        // Expand or collapse the card view by pressing the arrows
+        if (devices.get(position).isExpanded()) {
             holder.expandedRelativeLayout.setVisibility(View.VISIBLE);
             holder.btnDownArrow.setVisibility(View.GONE);
+            holder.btnUpArrow.setVisibility(View.VISIBLE);
+        } else {
+            holder.expandedRelativeLayout.setVisibility(View.GONE);
+            holder.btnDownArrow.setVisibility(View.VISIBLE);
+            holder.btnUpArrow.setVisibility(View.GONE);
         }
     }
 
@@ -81,7 +86,7 @@ public class DeviceRecyclerViewAdapter extends RecyclerView.Adapter<DeviceRecycl
         return devices.size();
     }
 
-    public void setDevices(ArrayList<Device> devices){
+    public void setDevices(List<Device> devices){
         this.devices = devices;
         notifyDataSetChanged();
     }

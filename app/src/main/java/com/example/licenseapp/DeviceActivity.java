@@ -27,7 +27,7 @@ public class DeviceActivity extends AppCompatActivity {
         if(intent != null){
             int deviceId = intent.getIntExtra(DEVICE_ID_KEY, -1);
             if(deviceId != -1){
-                Device incomingDevice = Utils.getInstance(this).getdeviceById(deviceId);
+                Device incomingDevice = Utils.getInstance(this).getdeviceById(deviceId, this);
                 if(incomingDevice != null){
                     setData(incomingDevice);
                 }

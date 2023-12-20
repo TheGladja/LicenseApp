@@ -16,12 +16,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initDevices();
         initViews();
         buttonMyDevice();
         buttonDevices();
         buttonBestChargingDevice();
         buttonEnergyGraph();
         buttonAboutAction();
+    }
+
+    private void initDevices(){
+        //If it is the first time the user launches the app
+        //It will initialize the data
+        if(Utils.getInstance(this).getAllDevices(this).size() == 0){
+            Utils.getInstance(this).initData();
+        }
     }
 
     private void initViews(){

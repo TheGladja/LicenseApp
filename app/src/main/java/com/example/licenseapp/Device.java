@@ -1,15 +1,12 @@
 package com.example.licenseapp;
 
 public class Device {
-    private static int nextId = 1;
     private int battery, id;
     private String producer, model, imgUrl, shortDesc, longDesc;
     private boolean isExpanded;
 
-    public Device(int battery, String producer, String model, String imgUrl, String shortDesc, String longDesc) {
-        //Increment id by 1 for each new device
-        this.id = nextId;
-        nextId++;
+    public Device(int id, int battery, String producer, String model, String imgUrl, String shortDesc, String longDesc) {
+        this.id = id;
         this.battery = battery;
         this.producer = producer;
         this.model = model;
@@ -18,6 +15,19 @@ public class Device {
         this.longDesc = longDesc;
         //Initially the card view is not expanded
         isExpanded = false;
+    }
+
+    public Device(int battery, String producer, String model, String shortDesc, String longDesc) {
+        this.battery = battery;
+        this.producer = producer;
+        this.model = model;
+        this.shortDesc = shortDesc;
+        this.longDesc = longDesc;
+        //Initially the card view is not expanded
+        isExpanded = false;
+        //Set default values
+        this.id = 0;
+        this.imgUrl = "";
     }
 
     public int getBattery() {

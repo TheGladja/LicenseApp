@@ -19,7 +19,7 @@ public class DevicesActivity extends AppCompatActivity {
         adapter = new DeviceRecyclerViewAdapter(this);
         recViewDevices.setAdapter(adapter);
         recViewDevices.setLayoutManager(new LinearLayoutManager(this));
-        adapter.setDevices(Utils.getInstance(this).getAllDevices());
+        adapter.setDevices(Utils.getInstance(this).getAllDevices(this));
     }
 
     private void initViews(){
