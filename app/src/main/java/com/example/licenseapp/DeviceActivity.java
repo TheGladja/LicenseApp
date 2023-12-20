@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +16,8 @@ public class DeviceActivity extends AppCompatActivity {
     public static final String DEVICE_ID_KEY = "deviceId";
     private ImageView deviceImg;
     private TextView producerTxt, modelTxt, batteryCapacityTxt, longDescTxt;
+    private ImageButton deviceItemNavBarMyDevice, deviceItemNavBarEnergyGraph;
+    private Button deviceItemNavBarDeleteDevice;
 
 
     @Override
@@ -33,6 +38,27 @@ public class DeviceActivity extends AppCompatActivity {
                 }
             }
         }
+
+        buttonViews();
+    }
+
+    //TODO: make the delete button work
+    private void buttonViews(){
+        deviceItemNavBarMyDevice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DeviceActivity.this, MyDeviceActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        deviceItemNavBarEnergyGraph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DeviceActivity.this, EnergyGraphActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initViews(){
@@ -41,6 +67,9 @@ public class DeviceActivity extends AppCompatActivity {
         modelTxt = findViewById(R.id.modelTxt);
         batteryCapacityTxt = findViewById(R.id.batteryCapacityTxt);
         longDescTxt = findViewById(R.id.longDescTxt);
+        deviceItemNavBarMyDevice = findViewById(R.id.deviceItemNavBarMyDevice);
+        deviceItemNavBarEnergyGraph = findViewById(R.id.deviceItemNavBarEnergyGraph);
+        deviceItemNavBarDeleteDevice = findViewById(R.id.deviceItemNavBarDeleteDevice);
     }
 
     private void setData(Device device){

@@ -1,17 +1,56 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DevicesActivity"
-    android:background="#FFFDD0">
+    android:background="#FFFDD0"
+    tools:context=".DevicesActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recViewDevices"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp" />
+        android:layout_above="@id/devicesListNavBar"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <RelativeLayout
+        android:id="@+id/devicesListNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#eddde9">
+
+        <ImageButton
+            android:id="@+id/devicesListNavBarMyDevice"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:backgroundTint="#1286a6"
+            android:contentDescription="My device"
+            android:src="@drawable/my_device" />
+
+        <Button
+            android:id="@+id/devicesListNavBarAddDevice"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="#1286a6"
+            android:text="Add a device"
+            android:textColor="#eddde9" />
+
+        <ImageButton
+            android:id="@+id/devicesListNavBarEnergyGraph"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="25dp"
+            android:backgroundTint="#1286a6"
+            android:contentDescription="Energy graph"
+            android:src="@drawable/energy_chart" />
+
+    </RelativeLayout>
 
 </RelativeLayout>
