@@ -4,13 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DeviceActivity"
-    android:background="#FFFDD0">
+    android:background="#FFFDD0"
+    tools:context=".DeviceActivity">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/deviceItemNavBar">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -151,48 +150,51 @@
                 android:text="Long description"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/longDescTxt"
+                android:layout_marginTop="50dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
-    <RelativeLayout
-        android:id="@+id/deviceItemNavBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+
+    <ImageButton
+        android:id="@+id/deviceItemNavBarMyDevice"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:background="#80FFFFFF">
+        android:layout_marginLeft="25dp"
+        android:backgroundTint="#1286a6"
+        android:contentDescription="My device"
+        android:src="@drawable/my_device" />
 
-        <ImageButton
-            android:id="@+id/deviceItemNavBarMyDevice"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="25dp"
-            android:backgroundTint="#1286a6"
-            android:contentDescription="My device"
-            android:src="@drawable/my_device" />
+    <Button
+        android:id="@+id/deviceItemNavBarDeleteDevice"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="#1286a6"
+        android:text="Delete device"
+        android:textColor="#eddde9" />
 
-        <Button
-            android:id="@+id/deviceItemNavBarDeleteDevice"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:backgroundTint="#1286a6"
-            android:text="Delete device"
-            android:textColor="#eddde9" />
+    <ImageButton
+        android:id="@+id/deviceItemNavBarEnergyGraph"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="25dp"
+        android:backgroundTint="#1286a6"
+        android:contentDescription="Energy graph"
+        android:src="@drawable/energy_chart" />
 
-        <ImageButton
-            android:id="@+id/deviceItemNavBarEnergyGraph"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="25dp"
-            android:backgroundTint="#1286a6"
-            android:contentDescription="Energy graph"
-            android:src="@drawable/energy_chart" />
-
-    </RelativeLayout>
 
 </RelativeLayout>

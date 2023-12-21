@@ -9,48 +9,39 @@
         android:id="@+id/recViewDevices"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_above="@id/devicesListNavBar"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <RelativeLayout
-        android:id="@+id/devicesListNavBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:id="@+id/devicesListNavBarMyDevice"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:background="#eddde9">
+        android:layout_marginLeft="25dp"
+        android:backgroundTint="#1286a6"
+        android:contentDescription="My device"
+        android:src="@drawable/my_device" />
 
-        <ImageButton
-            android:id="@+id/devicesListNavBarMyDevice"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="25dp"
-            android:backgroundTint="#1286a6"
-            android:contentDescription="My device"
-            android:src="@drawable/my_device" />
+    <Button
+        android:id="@+id/devicesListNavBarAddDevice"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="#1286a6"
+        android:text="Add a device"
+        android:textColor="#eddde9" />
 
-        <Button
-            android:id="@+id/devicesListNavBarAddDevice"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:backgroundTint="#1286a6"
-            android:text="Add a device"
-            android:textColor="#eddde9" />
-
-        <ImageButton
-            android:id="@+id/devicesListNavBarEnergyGraph"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="25dp"
-            android:backgroundTint="#1286a6"
-            android:contentDescription="Energy graph"
-            android:src="@drawable/energy_chart" />
-
-    </RelativeLayout>
+    <ImageButton
+        android:id="@+id/devicesListNavBarEnergyGraph"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="25dp"
+        android:backgroundTint="#1286a6"
+        android:contentDescription="Energy graph"
+        android:src="@drawable/energy_chart" />
 
 </RelativeLayout>
