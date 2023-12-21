@@ -1,6 +1,7 @@
 package com.example.licenseapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -75,5 +76,16 @@ public class MyDeviceActivity extends AppCompatActivity {
         }
 
         return batteryCapacity;
+    }
+
+    //When pressing back button the user will be sent to the main page
+    //The history of accessed pages will be deleted
+    //So if the user will press the back button again nothing will happen (the application will be quitted)
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

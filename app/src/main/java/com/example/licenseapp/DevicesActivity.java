@@ -7,12 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 public class DevicesActivity extends AppCompatActivity {
     private RecyclerView recViewDevices;
     private DeviceRecyclerViewAdapter adapter;
     private ImageButton devicesListNavBarMyDevice, devicesListNavBarEnergyGraph;
+    private Button devicesListNavBarAddDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +47,20 @@ public class DevicesActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        devicesListNavBarAddDevice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DevicesActivity.this, AddDeviceActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initViews(){
         recViewDevices = findViewById(R.id.recViewDevices);
         devicesListNavBarMyDevice = findViewById(R.id.devicesListNavBarMyDevice);
         devicesListNavBarEnergyGraph = findViewById(R.id.devicesListNavBarEnergyGraph);
+        devicesListNavBarAddDevice = findViewById(R.id.devicesListNavBarAddDevice);
     }
 }

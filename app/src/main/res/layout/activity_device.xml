@@ -10,7 +10,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/devicesListNavBar">
+        android:layout_above="@+id/deviceItemNavBar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -160,7 +160,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#eddde9">
+        android:background="#80FFFFFF">
 
         <ImageButton
             android:id="@+id/deviceItemNavBarMyDevice"

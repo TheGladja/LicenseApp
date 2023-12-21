@@ -69,17 +69,20 @@ public class DeviceDatabase extends SQLiteOpenHelper {
         return false;
     }
 
-    public boolean deleteDevice(Device device){
+    public boolean deleteDevice(Device device) {
         SQLiteDatabase database = this.getWritableDatabase();
-        String queryDeleteDevice = "DELETE FROM " + DEVICES_TABLE_NAME + " WHERE " + COLUMN_ID + " = " + device.getId();
 
-        Cursor cursor = database.rawQuery(queryDeleteDevice, null);
+        // Define the WHERE clause for deletion
+        String selection = COLUMN_ID + " = ?";
+        String[] selectionArgs = { String.valueOf(device.getId()) };
 
-        if(cursor.moveToFirst()){
-            return true;
-        }
-        return false;
+        // Perform the deletion
+        int deletedRows = database.delete(DEVICES_TABLE_NAME, selection, selectionArgs);
+
+        // Check the number of rows affected by the deletion
+        return deletedRows > 0;
     }
+
 
     public List<Device> getAllDevices(){
         List<Device> returnList = new ArrayList<>();
