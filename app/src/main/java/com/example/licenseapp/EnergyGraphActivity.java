@@ -82,7 +82,7 @@ public class EnergyGraphActivity extends AppCompatActivity {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
         xAxis.setCenterAxisLabels(false);
-        xAxis.setLabelRotationAngle(45);
+        xAxis.setLabelRotationAngle(90);
         xAxis.setLabelCount(labelsBarChart.size()); // Set the number of labels to display
 
         // Disable description label

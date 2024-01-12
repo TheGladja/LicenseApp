@@ -29,8 +29,11 @@ public class MainActivity extends AppCompatActivity {
         //If it is the first time the user launches the app
         //It will initialize the data
         if(Utils.getInstance(this).getAllDevices(this).size() == 0){
-            Utils.getInstance(this).initData();
+           Utils.getInstance(this).initData();
         }
+
+//        DeviceDatabase deviceDatabase = new DeviceDatabase(this);
+//        deviceDatabase.deleteAllDevices();
     }
 
     private void initViews(){
