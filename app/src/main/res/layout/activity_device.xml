@@ -16,22 +16,30 @@
             android:layout_height="match_parent">
 
 
-            <ImageView
-                android:id="@+id/deviceImage"
-                android:layout_width="350dp"
-                android:layout_height="350dp"
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:backgroundTint="#fcfffe"
+                app:cardCornerRadius="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/deviceImage"
+                    android:layout_width="320dp"
+                    android:layout_height="320dp"
+                    tools:srcCompat="@tools:sample/avatars" />
+            </androidx.cardview.widget.CardView>
+
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="384dp" />
+                app:layout_constraintGuide_begin="350dp" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline2"
@@ -45,7 +53,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Producer:"
+                android:textColor="#0a0a0a"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toTopOf="@+id/guideline" />
 
@@ -55,7 +65,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Model:"
+                android:textColor="#0a0a0a"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -65,7 +77,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Battery capacity:"
+                android:textColor="#0a0a0a"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -75,7 +89,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Charging time:"
+                android:textColor="#0a0a0a"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -85,7 +101,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Description"
-                android:textSize="16sp"
+                android:textColor="#0a0a0a"
+                android:textSize="19sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -107,6 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Samsung"
+                android:textColor="#0a0a0a"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toTopOf="@+id/guideline" />
@@ -117,6 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="galaxy s21"
+                android:textColor="#0a0a0a"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toBottomOf="@+id/producerTxt" />
@@ -127,6 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text=" 3000 Amps"
+                android:textColor="#0a0a0a"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toBottomOf="@+id/modelTxt" />
@@ -137,6 +158,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="N/A"
+                android:textColor="#0a0a0a"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toBottomOf="@+id/batteryCapacityTxt" />
@@ -149,6 +171,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="Long description"
+                android:textColor="#0a0a0a"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -186,7 +209,7 @@
         android:layout_centerHorizontal="true"
         android:backgroundTint="#1286a6"
         android:text="Delete device"
-        android:textColor="#eddde9" />
+        android:textColor="#0a0a0a" />
 
     <ImageButton
         android:id="@+id/deviceItemNavBarEnergyGraph"

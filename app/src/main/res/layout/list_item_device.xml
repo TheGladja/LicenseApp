@@ -7,7 +7,8 @@
     android:layout_marginBottom="60dp"
     android:layout_marginTop="25dp"
     app:cardCornerRadius="20dp"
-    app:cardElevation="10dp">
+    app:cardElevation="10dp"
+    android:backgroundTint="#0a0a0a">
 
     <RelativeLayout
         android:layout_width="200dp"
@@ -18,17 +19,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imgDevice"
-                android:layout_width="200dp"
-                android:layout_height="220dp"
-                android:src="@mipmap/ic_launcher_round" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cardViewDeviceImg"
+                android:backgroundTint="#fcfffe"
+                app:cardCornerRadius="20dp">
+                <ImageView
+                    android:id="@+id/imgDevice"
+                    android:layout_width="200dp"
+                    android:layout_height="220dp"
+                    android:src="@mipmap/ic_launcher_round" />
+            </androidx.cardview.widget.CardView>
+
 
             <TextView
                 android:id="@+id/txtDeviceName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/imgDevice"
+                android:layout_below="@id/cardViewDeviceImg"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="7dp"
                 android:layout_marginTop="7dp"

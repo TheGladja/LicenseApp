@@ -31,7 +31,7 @@
         android:layout_centerHorizontal="true"
         android:backgroundTint="#1286a6"
         android:text="Add a device"
-        android:textColor="#eddde9" />
+        android:textColor="#0a0a0a" />
 
     <ImageButton
         android:id="@+id/devicesListNavBarEnergyGraph"

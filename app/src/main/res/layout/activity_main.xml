@@ -15,7 +15,7 @@
         android:layout_marginTop="30dp"
         android:fontFamily="@font/lobster_two_bold_italic"
         android:text="Charging Companion"
-        android:textColor="#eddde9"
+        android:textColor="#0a0a0a"
         android:textSize="28dp" />
 
     <androidx.cardview.widget.CardView
@@ -41,7 +41,7 @@
         android:text="My device"
         android:layout_centerHorizontal="true"
         android:backgroundTint="#1286a6"
-        android:textColor="#eddde9"
+        android:textColor="#0a0a0a"
         android:layout_below="@id/imgEmblem"
         android:layout_marginTop="10dp"
         />
@@ -55,7 +55,7 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="#1286a6"
         android:text="Devices"
-        android:textColor="#eddde9" />
+        android:textColor="#0a0a0a" />
 
     <Button
         android:id="@+id/btnBestChargingDevice"
@@ -66,7 +66,7 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="#1286a6"
         android:text="Best charging device"
-        android:textColor="#eddde9" />
+        android:textColor="#0a0a0a" />
 
     <Button
         android:id="@+id/btnEnergyGraph"
@@ -77,7 +77,7 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="#1286a6"
         android:text="Energy graph"
-        android:textColor="#eddde9" />
+        android:textColor="#0a0a0a" />
 
     <Button
         android:id="@+id/btnAbout"
@@ -88,7 +88,7 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="#1286a6"
         android:text="About"
-        android:textColor="#eddde9" />
+        android:textColor="#0a0a0a" />
 
     <TextView
         android:id="@+id/txtDevelopedBy"
@@ -98,7 +98,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:text="Developed by Cruceanu Calin"
-        android:textColor="#eddde9"
+        android:textColor="#0a0a0a"
         android:textStyle="italic" />
 
 </RelativeLayout>
