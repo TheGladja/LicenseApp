@@ -32,6 +32,8 @@ android {
 }
 
 dependencies {
+    implementation ("io.reactivex.rxjava2:rxandroid:2.1.1")
+    implementation ("io.reactivex.rxjava2:rxjava:2.2.21")
     implementation ("org.jsoup:jsoup:1.14.3")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation ("com.google.code.gson:gson:2.10.1")

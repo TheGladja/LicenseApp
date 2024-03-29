@@ -1,10 +1,11 @@
 package com.example.licenseapp;
 
 public class GraphModel {
-    private int id, energy;
+    private int id;
+    private float energy;
     private String date;
 
-    public GraphModel(int id, String date, int energy) {
+    public GraphModel(int id, String date, float energy) {
         this.id = id;
         this.date = date;
         this.energy = energy;
@@ -20,11 +21,11 @@ public class GraphModel {
         this.id = id;
     }
 
-    public int getEnergy() {
+    public float getEnergy() {
         return energy;
     }
 
-    public void setEnergy(int energy) {
+    public void setEnergy(float energy) {
         this.energy = energy;
     }
 

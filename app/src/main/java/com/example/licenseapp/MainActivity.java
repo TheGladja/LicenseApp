@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class MainActivity extends AppCompatActivity {
     private Button btnAbout, btnDevices, btnEnergyGraph, btnBestChargingDevice, btnMyDevice;
+    private FloatingActionButton btnBluetooth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         buttonBestChargingDevice();
         buttonEnergyGraph();
         buttonAboutAction();
+        buttonConnectBluetooth();
     }
 
     private void initDevices(){
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
            Utils.getInstance(this).initData();
         }
 
+        //Reset devices database
 //        DeviceDatabase deviceDatabase = new DeviceDatabase(this);
 //        deviceDatabase.deleteAllDevices();
     }
@@ -42,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         btnBestChargingDevice = findViewById(R.id.btnBestChargingDevice);
         btnEnergyGraph = findViewById(R.id.btnEnergyGraph);
         btnAbout = findViewById(R.id.btnAbout);
+        btnBluetooth = findViewById(R.id.btnBluetooth);
     }
 
     private void buttonMyDevice(){
@@ -109,6 +115,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 builder.create().show();
+            }
+        });
+    }
+
+    private void buttonConnectBluetooth(){
+        btnBluetooth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ConnectBluetoothActivity.class);
+                startActivity(intent);
             }
         });
     }

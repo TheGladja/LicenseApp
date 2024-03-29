@@ -2,6 +2,7 @@ package com.example.licenseapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class BestChargingDeviceActivity extends AppCompatActivity {
     private ImageView deviceImg;
-    private TextView producerTxt, modelTxt, batteryCapacityTxt, longDescTxt;
+    private TextView producerTxt, modelTxt, batteryCapacityTxt, chargingTimeTxt, longDescTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class BestChargingDeviceActivity extends AppCompatActivity {
         producerTxt = findViewById(R.id.producerTxt);
         modelTxt = findViewById(R.id.modelTxt);
         batteryCapacityTxt = findViewById(R.id.batteryCapacityTxt);
+        chargingTimeTxt = findViewById(R.id.chargingTimeTxt);
         longDescTxt = findViewById(R.id.longDescTxt);
     }
 
@@ -52,5 +54,22 @@ public class BestChargingDeviceActivity extends AppCompatActivity {
         modelTxt.setText(device.getModel());
         batteryCapacityTxt.setText(String.valueOf(device.getBattery()) + " mAh");
         longDescTxt.setText(device.getLongDesc());
+        deviceChargingTime(device);
+    }
+
+    private void deviceChargingTime(Device device){
+        // Retrieve the voltage from SharedPreferences
+        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        float voltage = prefs.getFloat("VOLTAGE", 0.0f);
+
+        //Let's say if we have 5 volts we have 1000 mah (the maximum ammount of intensity(mAh))
+        float intensity = voltage * 250;
+
+        float chargingTime = (float )device.getBattery() / intensity;
+
+        //Format the charging time to display only two decimal places
+        String formattedChargingTime = String.format("%.2f", chargingTime);
+
+        chargingTimeTxt.setText(formattedChargingTime + " hours");
     }
 }

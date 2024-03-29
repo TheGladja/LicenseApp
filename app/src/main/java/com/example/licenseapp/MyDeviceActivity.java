@@ -2,6 +2,7 @@ package com.example.licenseapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -53,7 +54,23 @@ public class MyDeviceActivity extends AppCompatActivity {
         txtBrand.setText(Build.BRAND.toUpperCase());
         txtModel.setText(Build.MODEL);
         txtMyDeviceBatteryCapacity.setText(String.valueOf(getBatteryCapacity(this)) + " mAh");
-        txtChargingTime.setText("N/A");
+        myDeviceChargingTime();
+    }
+
+    private void myDeviceChargingTime(){
+        // Retrieve the voltage from SharedPreferences
+        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        float voltage = prefs.getFloat("VOLTAGE", 0.0f);
+
+        //Let's say if we have 5 volts we have 1000 mah (the maximum ammount of intensity(mAh))
+        float intensity = voltage * 250;
+
+        float chargingTime = (float )getBatteryCapacity(this) / intensity;
+
+        //Format the charging time to display only two decimal places
+        String formattedChargingTime = String.format("%.2f", chargingTime);
+
+        txtChargingTime.setText(formattedChargingTime + " hours");
     }
 
     private double getBatteryCapacity(Context context) {
@@ -77,15 +94,4 @@ public class MyDeviceActivity extends AppCompatActivity {
 
         return batteryCapacity;
     }
-
-    //When pressing back button the user will be sent to the main page
-    //The history of accessed pages will be deleted
-    //So if the user will press the back button again nothing will happen (the application will be quitted)
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//        Intent intent = new Intent(this, MainActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(intent);
-//    }
 }

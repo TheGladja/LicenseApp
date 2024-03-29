@@ -23,7 +23,7 @@ public class GraphDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String queryCreateTable = "CREATE TABLE " + GRAPH_TABLE_NAME + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_DATE + " TEXT, " + COLUMN_ENERGY + " INT)";
+        String queryCreateTable = "CREATE TABLE " + GRAPH_TABLE_NAME + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_DATE + " TEXT, " + COLUMN_ENERGY + " FLOAT)";
         db.execSQL(queryCreateTable);
     }
 
@@ -86,7 +86,7 @@ public class GraphDatabase extends SQLiteOpenHelper {
             do{
                 int graphSetId = cursor.getInt(0);
                 String graphSetDate = cursor.getString(1);
-                int graphSetEnergy = cursor.getInt(2);
+                float graphSetEnergy = cursor.getFloat(2);
 
                 GraphModel newGraphModel = new GraphModel(graphSetId, graphSetDate, graphSetEnergy);
                 returnList.add(newGraphModel);

@@ -35,16 +35,15 @@
     </androidx.cardview.widget.CardView>
 
     <Button
+        android:id="@+id/btnMyDevice"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:id="@+id/btnMyDevice"
-        android:text="My device"
-        android:layout_centerHorizontal="true"
-        android:backgroundTint="#1286a6"
-        android:textColor="#0a0a0a"
         android:layout_below="@id/imgEmblem"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        />
+        android:backgroundTint="#1286a6"
+        android:text="My device"
+        android:textColor="#0a0a0a" />
 
     <Button
         android:id="@+id/btnDevices"
@@ -100,5 +99,17 @@
         android:text="Developed by Cruceanu Calin"
         android:textColor="#0a0a0a"
         android:textStyle="italic" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnBluetooth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="80dp"
+        android:backgroundTint="#1286a6"
+        android:clickable="true"
+        android:contentDescription="Bluetooth Button"
+        app:srcCompat="@drawable/bluetooth"
+        android:tint="#0a0a0a"/>
 
 </RelativeLayout>

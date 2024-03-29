@@ -1,6 +1,7 @@
 package com.example.licenseapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -18,12 +19,14 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class EnergyGraphActivity extends AppCompatActivity {
@@ -85,6 +88,14 @@ public class EnergyGraphActivity extends AppCompatActivity {
         xAxis.setLabelRotationAngle(90);
         xAxis.setLabelCount(labelsBarChart.size()); // Set the number of labels to display
 
+        // Customize the y-axis to display float values without rounding
+        barChart.getAxisLeft().setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format(Locale.getDefault(), "%.2f", value); // Format float values to display up to 2 decimal places without rounding
+            }
+        });
+
         // Disable description label
         Description description = new Description();
         description.setEnabled(false);
@@ -119,12 +130,7 @@ public class EnergyGraphActivity extends AppCompatActivity {
         pieChart.invalidate();
     }
 
-    //TODO: connection with the bluetooth
     private void addCurrentEnergySet() {
-        //*******
-        Random random = new Random();
-        int randomNumber = random.nextInt(91) + 10; // Generates a random number between 0 and 90, then adds 10
-        //*******
         GraphDatabase graphDatabase = new GraphDatabase(this);
         List<GraphModel> graphSetsList = graphDatabase.getAllGraphSets();
         // Get the current date
@@ -134,7 +140,12 @@ public class EnergyGraphActivity extends AppCompatActivity {
         // Convert the date to a string using the defined format
         String date = localDate.format(dateTimeFormatter);
 
-        GraphModel newGraphModel = new GraphModel(1, date,  randomNumber);
+        // Retrieve the voltage from SharedPreferences
+        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        float voltage = prefs.getFloat("VOLTAGE", 0.0f);
+
+        GraphModel newGraphModel = new GraphModel(1, date,  voltage);
+
 
         //If the newest read energy is the greatest in that day we update the energy graph
         //Else if this is the first time we read the energy in that day we just add it to the database
@@ -176,6 +187,8 @@ public class EnergyGraphActivity extends AppCompatActivity {
         List<GraphModel> graphSetsList = graphDatabase.getAllGraphSets();
         int count = 0;
 
+        //graphDatabase.deleteAllGraphSets();
+
         for (GraphModel gp : graphSetsList) {
             entriesBarChart.add(new BarEntry(count++, gp.getEnergy()));
             labelsBarChart.add(gp.getDate());
@@ -184,10 +197,6 @@ public class EnergyGraphActivity extends AppCompatActivity {
     }
 
     private void initDataSets() {
-        //*******
-        Random random = new Random();
-        int randomNumber = random.nextInt(91) + 10; // Generates a random number between 0 and 90, then adds 10
-        //*******
         GraphDatabase graphDatabase = new GraphDatabase(this);
         // Get the current date
         LocalDate localDate = LocalDate.now();
@@ -196,7 +205,8 @@ public class EnergyGraphActivity extends AppCompatActivity {
         // Convert the date to a string using the defined format
         String date = localDate.format(dateTimeFormatter);
 
-        GraphModel newGraphModel = new GraphModel(1, date,  randomNumber);
+        //Initial voltage value is set to 0
+        GraphModel newGraphModel = new GraphModel(1, date,  0.0f);
 
         try{
             graphDatabase.addGraphSet(newGraphModel);
@@ -210,16 +220,5 @@ public class EnergyGraphActivity extends AppCompatActivity {
         barChart = findViewById(R.id.barChart);
         pieChart = findViewById(R.id.pieChart);
     }
-
-    //When pressing back button the user will be sent to the main page
-    //The history of accessed pages will be deleted
-    //So if the user will press the back button again nothing will happen (the application will be quitted)
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//        Intent intent = new Intent(this, MainActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(intent);
-//    }
 }
 

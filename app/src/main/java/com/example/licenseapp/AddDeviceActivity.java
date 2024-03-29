@@ -42,7 +42,6 @@ public class AddDeviceActivity extends AppCompatActivity {
         txtWarningLongDesc = findViewById(R.id.txtWarningLongDesc);
     }
 
-    //TODO: add red warning messages
     private void buttonAddDevice(){
         //Add a new device to the database
         btnCreateDevice.setOnClickListener(new View.OnClickListener() {

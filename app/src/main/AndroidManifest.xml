@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Add Bluetooth and Internet permission -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -14,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LicenseApp"
         tools:targetApi="31">
+        <activity
+            android:name=".ConnectBluetoothActivity"
+            android:exported="false" />
         <activity
             android:name=".AddDeviceActivity"
             android:exported="false" />
