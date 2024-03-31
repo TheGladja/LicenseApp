@@ -88,13 +88,8 @@ public class EnergyGraphActivity extends AppCompatActivity {
         xAxis.setLabelRotationAngle(90);
         xAxis.setLabelCount(labelsBarChart.size()); // Set the number of labels to display
 
-        // Customize the y-axis to display float values without rounding
-        barChart.getAxisLeft().setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                return String.format(Locale.getDefault(), "%.2f", value); // Format float values to display up to 2 decimal places without rounding
-            }
-        });
+        // Apply the custom ValueFormatter to the y-axis of the bar chart
+        barChart.getAxisLeft().setValueFormatter(valueFormatter);
 
         // Disable description label
         Description description = new Description();
@@ -121,6 +116,9 @@ public class EnergyGraphActivity extends AppCompatActivity {
         // Text size
         pieDataSet.setValueTextSize(16f);
 
+        // Apply the custom ValueFormatter to the data set of the pie chart
+        pieDataSet.setValueFormatter(valueFormatter);
+
         // Disable description label
         Description description = new Description();
         description.setEnabled(false);
@@ -129,6 +127,15 @@ public class EnergyGraphActivity extends AppCompatActivity {
         // Refresh the pie chart
         pieChart.invalidate();
     }
+
+    // Create a custom ValueFormatter to format the y-axis values with two decimal points
+    ValueFormatter valueFormatter = new ValueFormatter() {
+        @Override
+        public String getFormattedValue(float value) {
+            // Format the value to have two decimal points
+            return String.format(Locale.getDefault(), "%.2f", value);
+        }
+    };
 
     private void addCurrentEnergySet() {
         GraphDatabase graphDatabase = new GraphDatabase(this);
