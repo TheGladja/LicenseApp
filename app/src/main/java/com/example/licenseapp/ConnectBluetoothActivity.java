@@ -146,6 +146,8 @@ public class ConnectBluetoothActivity extends AppCompatActivity {
                                 //Parse the voltage to the other activities
                                 SharedPreferences.Editor editor = getSharedPreferences("MyPrefs", MODE_PRIVATE).edit();
                                 editor.putFloat("VOLTAGE", voltage);
+                                // Tell the program that a new voltage value has been read
+                                editor.putBoolean("NEW_READ_VOLTAGE", true);
                                 editor.apply();
                             });
 

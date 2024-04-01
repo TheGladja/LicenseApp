@@ -1,6 +1,5 @@
 package com.example.licenseapp;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,7 +26,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 public class EnergyGraphActivity extends AppCompatActivity {
     private BarChart barChart;
@@ -55,7 +53,7 @@ public class EnergyGraphActivity extends AppCompatActivity {
             appFirstOpened = true;
         }
 
-        if(!appFirstOpened){
+        if (!appFirstOpened) {
             //Add the biggest energy value that was read in that moment
             addCurrentEnergySet();
         }
@@ -150,21 +148,41 @@ public class EnergyGraphActivity extends AppCompatActivity {
         // Retrieve the voltage from SharedPreferences
         SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         float voltage = prefs.getFloat("VOLTAGE", 0.0f);
+        boolean newReadVoltage = prefs.getBoolean("NEW_READ_VOLTAGE", false);
 
-        GraphModel newGraphModel = new GraphModel(1, date,  voltage);
+        GraphModel newGraphModel = new GraphModel(1, date, voltage);
 
+        // If a new voltage was read using the bluetooth connection
+        if (newReadVoltage) {
+            //The voltage will be seen as read so we need to update the shared preferences
+            SharedPreferences.Editor editor = getSharedPreferences("MyPrefs", MODE_PRIVATE).edit();
+            editor.putBoolean("NEW_READ_VOLTAGE", false);
+            editor.apply();
+            //If the newest read energy is the greatest in that day we update the energy graph
+            //Else if this is the first time we read the energy in that day we just add it to the database
+            GraphModel lastestEnergyRead = graphSetsList.get(graphSetsList.size() - 1);
+            if (lastestEnergyRead.getDate().equals(newGraphModel.getDate())) {
+                if (newGraphModel.getEnergy() > lastestEnergyRead.getEnergy()) {
+                    try {
+                        graphDatabase.deleteGraphSet(lastestEnergyRead);
+                        graphDatabase.addGraphSet(newGraphModel);
+                        Toast.makeText(this, "Bigger energy value added to the graphs", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(this, "Error adding a bigger energy value", Toast.LENGTH_SHORT).show();
+                    }
 
-        //If the newest read energy is the greatest in that day we update the energy graph
-        //Else if this is the first time we read the energy in that day we just add it to the database
-        GraphModel lastestEnergyRead = graphSetsList.get(graphSetsList.size() - 1);
-        if(lastestEnergyRead.getDate().equals(newGraphModel.getDate())){
-            if(newGraphModel.getEnergy() > lastestEnergyRead.getEnergy()){
-                try{
-                    graphDatabase.deleteGraphSet(lastestEnergyRead);
+                    //Update the graphs
+                    entriesBarChart.clear();
+                    labelsBarChart.clear();
+                    entriesPieChart.clear();
+                    getDataSets();
+                }
+            } else {
+                try {
                     graphDatabase.addGraphSet(newGraphModel);
-                    Toast.makeText(this, "Bigger energy value added to the graphs", Toast.LENGTH_SHORT).show();
-                }catch (Exception e){
-                    Toast.makeText(this, "Error adding a bigger energy value", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "New energy value added to the graphs", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(this, "Error adding new energy value", Toast.LENGTH_SHORT).show();
                 }
 
                 //Update the graphs
@@ -173,19 +191,6 @@ public class EnergyGraphActivity extends AppCompatActivity {
                 entriesPieChart.clear();
                 getDataSets();
             }
-        }else{
-            try{
-                graphDatabase.addGraphSet(newGraphModel);
-                Toast.makeText(this, "New energy value added to the graphs", Toast.LENGTH_SHORT).show();
-            }catch (Exception e){
-                Toast.makeText(this, "Error adding new energy value", Toast.LENGTH_SHORT).show();
-            }
-
-            //Update the graphs
-            entriesBarChart.clear();
-            labelsBarChart.clear();
-            entriesPieChart.clear();
-            getDataSets();
         }
     }
 
@@ -194,6 +199,7 @@ public class EnergyGraphActivity extends AppCompatActivity {
         List<GraphModel> graphSetsList = graphDatabase.getAllGraphSets();
         int count = 0;
 
+        //For deleting all the chart values
         //graphDatabase.deleteAllGraphSets();
 
         for (GraphModel gp : graphSetsList) {
@@ -213,12 +219,12 @@ public class EnergyGraphActivity extends AppCompatActivity {
         String date = localDate.format(dateTimeFormatter);
 
         //Initial voltage value is set to 0
-        GraphModel newGraphModel = new GraphModel(1, date,  0.0f);
+        GraphModel newGraphModel = new GraphModel(1, date, 0.0f);
 
-        try{
+        try {
             graphDatabase.addGraphSet(newGraphModel);
             Toast.makeText(this, "Graph initialized successfully", Toast.LENGTH_SHORT).show();
-        }catch(Exception e){
+        } catch (Exception e) {
             Toast.makeText(this, "Error initializing graph", Toast.LENGTH_SHORT).show();
         }
     }
