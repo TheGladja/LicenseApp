@@ -50,7 +50,7 @@ public class ConnectedThread extends Thread {
         int numberOfReadings = 0; //to control the number of readings from the Arduino
 
         // Keep listening to the InputStream until an exception occurs.
-        //We just want to get 1 temperature readings from the Arduino
+        //We just want to get 1 voltage reading from the Arduino
         while (numberOfReadings < 1) {
             try {
 
