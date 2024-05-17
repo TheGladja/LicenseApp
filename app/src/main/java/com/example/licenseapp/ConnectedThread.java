@@ -35,7 +35,6 @@ public class ConnectedThread extends Thread {
             Log.e(TAG, "Error occurred when creating output stream", e);
         }
         //Input and Output streams members of the class
-        //We wont use the Output stream of this project
         mmInStream = tmpIn;
         mmOutStream = tmpOut;
     }
