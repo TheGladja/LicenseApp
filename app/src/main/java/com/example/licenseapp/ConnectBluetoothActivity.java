@@ -136,7 +136,6 @@ public class ConnectBluetoothActivity extends AppCompatActivity {
                             subscribe(valueRead -> {
                                 //valueRead returned by the onNext() from the Observable
                                 btReadings.setText(valueRead + " volts");
-                                //We just scratched the surface with RxAndroid
 
                                 // Convert valueRead to a float
                                 float voltage = Float.parseFloat(valueRead);
