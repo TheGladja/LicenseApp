@@ -114,7 +114,6 @@ public class ConnectBluetoothActivity extends AppCompatActivity {
                 //We just want to stream 1 value, so we close the BT stream
                 connectedThread.cancel();
             }
-            // SystemClock.sleep(5000); // simulate delay
             //Then we close the socket connection
             connectThread.cancel();
             //We could Override the onComplete function
