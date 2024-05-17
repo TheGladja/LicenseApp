@@ -67,7 +67,6 @@ public class ConnectBluetoothActivity extends AppCompatActivity {
         btReadings.setText(Float.toString(voltage) + " volts");
 
         //Using a handler to update the interface in case of an error connecting to the BT device
-        //My idea is to show handler vs RxAndroid
         handler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
